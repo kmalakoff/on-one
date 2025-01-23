@@ -1,0 +1,50 @@
+{
+  "name": "on-one",
+  "version": "0.0.0",
+  "description": "Subscribe to one or more events and accept the first emitted",
+  "keywords": [
+    "event",
+    "emitter",
+    "on",
+    "trigger",
+    "listen",
+    "one",
+    "once"
+  ],
+  "homepage": "https://github.com/kmalakoff/on-one",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kmalakoff/on-one.git"
+  },
+  "license": "MIT",
+  "author": "Kevin Malakoff <kmalakoff@gmail.com> (https://github.com/kmalakoff)",
+  "type": "module",
+  "exports": {
+    "import": "./dist/esm/index.mjs",
+    "require": "./dist/cjs/index.cjs",
+    "types": "./dist/types/index.d.ts"
+  },
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.mjs",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsds build",
+    "format": "biome check --write --unsafe src/ test/",
+    "test": "tsds test:node --no-timeouts",
+    "test:engines": "nvu engines npm test",
+    "version": "tsds version"
+  },
+  "devDependencies": {
+    "@types/mocha": "*",
+    "@types/node": "*"
+  },
+  "engines": {
+    "node": ">=0.8"
+  },
+  "tsds": {
+    "source": "src/index.ts"
+  }
+}
