@@ -1,6 +1,6 @@
 {
   "name": "on-one",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Subscribe to one or more events and accept the first emitted",
   "keywords": [
     "event",
