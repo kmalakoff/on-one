@@ -11,7 +11,7 @@ export default function onOne(emitter: NodeJS.EventEmitter, nameOrNames: string 
     // cleanup
     names.forEach((name) => emitter.removeListener(name, wrapper));
 
-    // biome-ignore lint/style/noArguments: <explanation>
+    // biome-ignore lint/complexity/noArguments: Apply arguments
     return fn.apply(null, arguments);
   }
 
