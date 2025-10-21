@@ -1,7 +1,6 @@
 import assert from 'assert';
 import { EventEmitter } from 'events';
 
-// @ts-ignore
 import oo from 'on-one';
 
 describe('on-one', () => {

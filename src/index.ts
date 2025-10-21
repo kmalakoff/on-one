@@ -9,11 +9,15 @@ export default function onOne(emitter: NodeJS.EventEmitter, nameOrNames: string 
     called = true;
 
     // cleanup
-    names.forEach((name) => emitter.removeListener(name, wrapper));
+    names.forEach((name) => {
+      emitter.removeListener(name, wrapper);
+    });
 
     // biome-ignore lint/complexity/noArguments: Apply arguments
     return fn.apply(null, arguments);
   }
 
-  names.forEach((name) => emitter.on(name, wrapper));
+  names.forEach((name) => {
+    emitter.on(name, wrapper);
+  });
 }
