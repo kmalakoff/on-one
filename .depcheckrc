@@ -1,1 +1,1 @@
-ignores: ["on-one"]
+ignores: ["node-version-use", "ts-dev-stack", "@biomejs/biome", "on-one"]
