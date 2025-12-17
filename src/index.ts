@@ -1,6 +1,6 @@
 const isArray = Array.isArray || ((x) => Object.prototype.toString.call(x) === '[object Array]');
 
-export default function onOne(emitter: NodeJS.EventEmitter, nameOrNames: string | string[], fn: (...args: unknown[]) => void) {
+export default function onOne(emitter: NodeJS.EventEmitter, nameOrNames: string | string[], fn: (err: Error | null, ...args: unknown[]) => void) {
   const names = isArray(nameOrNames) ? (nameOrNames as string[]) : [nameOrNames as string];
 
   let called = false;
@@ -16,7 +16,11 @@ export default function onOne(emitter: NodeJS.EventEmitter, nameOrNames: string 
         emitter.removeListener(names[i], wrappers[i]);
       }
 
-      return fn(...args, name);
+      // error-first callback: 'error' event passes error as first arg, others pass null
+      if (name === 'error') {
+        return fn(args[0] as Error, name);
+      }
+      return fn(null, ...args, name);
     }
     wrappers.push(wrapper);
     emitter.on(name, wrapper);
