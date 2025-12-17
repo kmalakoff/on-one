@@ -2,20 +2,36 @@
 
 Subscribe to one or more events and accept the first emitted.
 
-# one event
-```
-import oo = from 'on-one';
+### one event
+```js
+import oo from 'on-one';
 
 oo(stream, 'data', (chunk) => {
   // first chunk only
 })
 ```
 
-# multiple events
-```
-import oo = from 'on-one';
+### multiple events
+```js
+import oo from 'on-one';
 
 oo(stream, ['error', 'finish'], (err) => {
-  // it depends on if there was an error
+  // first event to fire wins
+})
+```
+
+### event name
+
+The event name that triggered the callback is passed as the last argument:
+
+```js
+import oo from 'on-one';
+
+oo(stream, ['error', 'finish'], (err, eventName) => {
+  if (eventName === 'error') {
+    console.error('Stream failed:', err);
+  } else {
+    console.log('Stream finished successfully');
+  }
 })
 ```

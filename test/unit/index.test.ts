@@ -52,4 +52,65 @@ describe('on-one', () => {
       assert.deepEqual(args[0], 'universe');
     });
   });
+
+  describe('passes event name as last argument', () => {
+    it('single event', () => {
+      const ee = new EventEmitter();
+      let receivedValue: unknown;
+      let receivedEventName: unknown;
+      oo(ee, 'hello', (value, eventName) => {
+        receivedValue = value;
+        receivedEventName = eventName;
+      });
+      ee.emit('hello', 'hey');
+      assert.equal(receivedValue, 'hey');
+      assert.equal(receivedEventName, 'hello');
+    });
+
+    it('multiple events (first)', () => {
+      const ee = new EventEmitter();
+      let receivedValue: unknown;
+      let receivedEventName: unknown;
+      oo(ee, ['hello', 'world'], (value, eventName) => {
+        receivedValue = value;
+        receivedEventName = eventName;
+      });
+      ee.emit('hello', 'hey');
+      assert.equal(receivedValue, 'hey');
+      assert.equal(receivedEventName, 'hello');
+    });
+
+    it('multiple events (second)', () => {
+      const ee = new EventEmitter();
+      let receivedValue: unknown;
+      let receivedEventName: unknown;
+      oo(ee, ['hello', 'world'], (value, eventName) => {
+        receivedValue = value;
+        receivedEventName = eventName;
+      });
+      ee.emit('world', 'universe');
+      assert.equal(receivedValue, 'universe');
+      assert.equal(receivedEventName, 'world');
+    });
+
+    it('works with multiple arguments', () => {
+      const ee = new EventEmitter();
+      let receivedArgs: unknown[];
+      oo(ee, 'data', (...args) => {
+        receivedArgs = args;
+      });
+      ee.emit('data', 'first', 'second', 'third');
+      assert.deepEqual(receivedArgs, ['first', 'second', 'third', 'data']);
+    });
+
+    it('works with no arguments', () => {
+      const ee = new EventEmitter();
+      let receivedArgs: unknown[];
+      oo(ee, 'close', (...args) => {
+        receivedArgs = args;
+      });
+      ee.emit('close');
+      assert.deepEqual(receivedArgs, ['close']);
+    });
+  });
 });
