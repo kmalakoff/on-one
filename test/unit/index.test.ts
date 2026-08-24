@@ -7,7 +7,7 @@ describe('on-one', () => {
   describe('does not call multiple times', () => {
     it('single event', () => {
       const ee = new EventEmitter();
-      const results = [];
+      const results: { err: Error | null; value: unknown }[] = [];
       oo(ee, 'hello', (err, value) => results.push({ err, value }));
       ee.emit('hello', 'hey');
       assert.equal(results.length, 1);
@@ -20,7 +20,7 @@ describe('on-one', () => {
 
     it('multiple events (first)', () => {
       const ee = new EventEmitter();
-      const results = [];
+      const results: { err: Error | null; value: unknown }[] = [];
       oo(ee, ['hello', 'world'], (err, value) => results.push({ err, value }));
       ee.emit('hello', 'hey');
       assert.equal(results.length, 1);
@@ -36,7 +36,7 @@ describe('on-one', () => {
 
     it('multiple events (second)', () => {
       const ee = new EventEmitter();
-      const results = [];
+      const results: { err: Error | null; value: unknown }[] = [];
       oo(ee, ['hello', 'world'], (err, value) => results.push({ err, value }));
       ee.emit('world', 'universe');
       assert.equal(results.length, 1);
@@ -157,7 +157,7 @@ describe('on-one', () => {
 
     it('works with multiple arguments', () => {
       const ee = new EventEmitter();
-      let receivedArgs: unknown[];
+      let receivedArgs: unknown[] = [];
       oo(ee, 'data', (...args) => {
         receivedArgs = args;
       });
@@ -167,7 +167,7 @@ describe('on-one', () => {
 
     it('works with no arguments', () => {
       const ee = new EventEmitter();
-      let receivedArgs: unknown[];
+      let receivedArgs: unknown[] = [];
       oo(ee, 'close', (...args) => {
         receivedArgs = args;
       });
