@@ -1,1 +1,1 @@
-ignores: ["node-version-use", "ts-dev-stack", "on-one"]
+ignores: ["on-one", "node-version-use", "ts-dev-stack"]
