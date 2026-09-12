@@ -1,37 +1,27 @@
-## on-one
+# on-one
 
 Subscribe to one or more events and accept the first emitted.
 
-### one event
-```js
-import oo from 'on-one';
-
-oo(stream, 'data', (chunk) => {
-  // first chunk only
-})
+```bash
+npm install on-one
 ```
 
-### multiple events
 ```js
-import oo from 'on-one';
+var EventEmitter = require('events').EventEmitter;
+var onOne = require('on-one');
+var emitter = new EventEmitter();
 
-oo(stream, ['error', 'finish'], (err) => {
-  // first event to fire wins
-})
-```
-
-### event name
-
-The event name that triggered the callback is passed as the last argument:
-
-```js
-import oo from 'on-one';
-
-oo(stream, ['error', 'finish'], (err, eventName) => {
+onOne(emitter, ['error', 'finish'], function (err, eventName) {
   if (eventName === 'error') {
     console.error('Stream failed:', err);
   } else {
     console.log('Stream finished successfully');
   }
-})
+});
+
+emitter.emit('finish'); // logs the success message
 ```
+
+The callback receives the error event's error as its first argument. Other
+events pass `null`, followed by their event arguments and the event name. After
+the first event, all listeners installed by `onOne` are removed.
